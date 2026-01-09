@@ -13,6 +13,31 @@
 </head>
 
 <body>
+    <div id="auth-overlay" class="overlay">
+    <div class="auth-card">
+        <h2>⛪ MassPort Login</h2>
+        <input type="email" id="login-email" placeholder="Email">
+        <input type="password" id="login-pass" placeholder="Password">
+        <button onclick="handleLogin()">Sign In</button>
+        <p id="auth-error" style="color:red"></p>
+    </div>
+</div>
+
+<button id="add-stamp-btn" class="fab" style="display:none" onclick="toggleForm()">+</button>
+
+<div id="form-overlay" class="overlay" style="display:none">
+    <div class="form-card">
+        <h3>New Stamp</h3>
+        <input type="text" id="church-name" placeholder="Name of Church" required>
+        <input type="text" id="church-address" placeholder="Address (City, State)" required>
+        <input type="file" id="church-image" accept="image/*">
+        <textarea id="church-notes" placeholder="Notes (optional)"></textarea>
+        <div class="form-btns">
+            <button onclick="saveStamp()">Save Stamp</button>
+            <button class="cancel" onclick="toggleForm()">Cancel</button>
+        </div>
+    </div>
+</div>
     <div class="header"><h1>MassPort</h1></div>
     
     <div class="tap-zone left" onclick="scrollGrid(-1)"></div>
