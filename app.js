@@ -16,42 +16,44 @@ function triggerHaptic(type = 'light') {
 
 async function init() {
     try {
-        const response = await fetch(CONFIG.tsvUrl);
-        const data = await response.text();
-        const rows = data.trim().split('\n').slice(1);
-        let rawLocs = rows.map(r => {
-            const cols = r.split('\t');
-            let rawState = cols[4] ? cols[4].split(',').pop().trim().toUpperCase() : 'XX';
-            if (!CONFIG.abbrToState[rawState]) rawState = 'EU';
-            return { name: cols[0], note: (cols[2] || "").trim(), imgUrl: cols[3] || '', city: cols[4] || '', stateName: rawState, type: 'paper' };
+        // 1. Fetch documents from Appwrite
+        const response = await databases.listDocuments(
+            CONFIG.DATABASE_ID,
+            CONFIG.COLLECTION_ID
+        );
+
+        // 2. Map Appwrite columns to our App variables
+        globalLocations = response.documents.map(doc => {
+            // Logic to extract State from address (e.g., "New York, NY")
+            const parts = doc.address ? doc.address.split(',') : [];
+            const rawState = parts.length > 1 ? parts.pop().trim().toUpperCase() : 'EU';
+
+            return {
+                id: doc.$id,
+                name: doc.name,
+                note: doc.notes || "",
+                imgUrl: doc.img_url || "",
+                city: doc.address || "",
+                stateName: rawState,
+                lat: doc.lat,
+                long: doc.long,
+                type: 'paper'
+            };
         });
-        
-        rawLocs.sort((a,b) => a.stateName === 'EU' ? 1 : b.stateName === 'EU' ? -1 : a.stateName.localeCompare(b.stateName));
-        
+
+        // 3. Sort and process colors (same as before)
         stateCounts = {};
-        rawLocs.forEach(l => { stateCounts[l.stateName] = (stateCounts[l.stateName] || 0) + 1; });
-
-        let processed = [];
-        let lastState = null;
-        let inkIdx = 0;
-        rawLocs.forEach(loc => {
-            if (loc.stateName !== lastState) {
-                const color = CONFIG.inkPalette[inkIdx % CONFIG.inkPalette.length];
-                stateInkMap[loc.stateName] = color;
-                processed.push({ stateName: loc.stateName, type: 'ink', inkColor: color, styleIdx: inkIdx });
-                lastState = loc.stateName;
-                inkIdx++;
-            }
-            processed.push(loc);
+        globalLocations.forEach(l => { 
+            stateCounts[l.stateName] = (stateCounts[l.stateName] || 0) + 1; 
         });
-        globalLocations = processed;
 
+        // 4. Render the UI
+        renderGrid();
         setupNavigation();
-        renderGrid(); 
-        initMap();
-        setupScrollEffect();
-        setupAutoNavTracker(); 
-    } catch (e) { console.error(e); }
+        initMap(); 
+    } catch (e) {
+        console.error("Appwrite Fetch Error:", e);
+    }
 }
 
 function setupNavigation() {
