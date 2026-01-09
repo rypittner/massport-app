@@ -1,5 +1,7 @@
 const CONFIG = {
-    tsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSz_zdXMghmyVYL5ugKVPciQ2f9o7vJEPokp1YKS1lZ0_SamkfF40hQlSMYdPhvmlCTlf2ZWojFlo2p/pub?gid=0&single=true&output=tsv',
+    ENDPOINT: 'https://sfo.cloud.appwrite.io/v1',
+    PROJECT_ID: '695680440027bfa5b520',
+    DATABASE_ID: 'stamps',
     themes: ['#4478A2','#C65265','#D78143','#297381','#89974F','#DAAD60','#757498','#AA7876','#D7A995','#6E917A'],
     inkPalette: ['#1B4F72', '#78281F', '#186A3B', '#7E5109', '#512E5F', '#117864'],
     abbrToState: { 
