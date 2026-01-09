@@ -1,8 +1,8 @@
 const { Client, Account, Databases, ID } = Appwrite;
 
 const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite Endpoint
-    .setProject('YOUR_PROJECT_ID');               // Your Project ID
+    .setEndpoint('https://sfo.cloud.appwrite.io/v1') // Your Appwrite Endpoint
+    .setProject('69567e050003ca751cbe');               // Your Project ID
 
 const account = new Account(client);
 const databases = new Databases(client);
