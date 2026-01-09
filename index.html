@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MassPort App</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Yrsa:wght@500;600&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="header"><h1>MassPort</h1></div>
+    
+    <div class="tap-zone left" onclick="scrollGrid(-1)"></div>
+    <div class="tap-zone right" onclick="scrollGrid(1)"></div>
+
+    <div id="main-grid"></div>
+
+    <div class="collector-nav-container">
+        <div class="collector-nav" id="filter-nav">
+            <div class="nav-pill-bg" id="nav-pill"></div>
+        </div>
+        <div class="map-btn-wrapper" id="map-btn-anchor"></div>
+    </div>
+    
+    <div id="map-container"><div id="map"></div></div>
+
+    <div id="myModal" class="modal">
+        <span class="close"><span class="material-symbols-rounded">close</span></span>
+        <div class="modal-frame" style="position:relative; max-width:85vw; display:flex; flex-direction:column; align-items:center;">
+            <img id="img01" style="max-height:60vh; width:auto; max-width:100%; border:12px solid white; box-shadow:0 30px 60px rgba(0,0,0,0.4);">
+            <div id="caption" style="color:white; text-align:center; margin-top:25px; font-family:'Yrsa', serif; width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
